@@ -1,0 +1,6 @@
+{
+  "address": ":8000",
+  "database": "postgres",
+  "kill_duration": 5,
+  "kill_duration_with_desc": 10
+}

@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-dnBlack: #0a0a0a;
+  --color-dnRed: #c10b0b;
+  --color-dnDarkRed: #7a0606;
+  --color-dnGray: #2a2a2a;
+  --color-dnLightGray: #e0e0e0;
+  --color-dnWhite: #f5f5f5;
+  --color-dnGold: #d4af37;
+
+  /* Background colors */
+  --bg-dnPrimary: var(--color-dnBlack);
+  --bg-dnSecondary: var(--color-dnGray);
+  --bg-dnCard: var(--color-dnGray);
+  --bg-dnButton: var(--color-dnRed);
+  --bg-dnButtonHover: var(--color-dnDarkRed);
+
+  /* Text colors */
+  --text-dnTitle: var(--color-dnRed);
+  --text-dnBody: var(--color-dnWhite);
+  --text-dnSecondary: var(--color-dnLightGray);
+  --text-dnAccent: var(--color-dnGold);
+
+  /* Border colors */
+  --border-dnPrimary: var(--color-dnRed);
+  --border-dnSecondary: var(--color-dnGold);
+
+  /* Font families */
+  --font-dnTitle: [ "'Times New Roman'", "serif"];
+  --font-dnBody: [ "'Courier New'", "monospace"];
+
+  /* Box shadows */
+  --shadow-dnCard: 0 4px 6px rgba(193, 11, 11, 0.3);
+  --shadow-dnButton: 0 0 8px rgba(193, 11, 11, 0.6);
+}
