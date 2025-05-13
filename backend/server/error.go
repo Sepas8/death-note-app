@@ -1,9 +1,10 @@
 package server
 
 import (
-	"backend/api"
 	"encoding/json"
 	"net/http"
+
+	"import github.com/Sepas8/death-note-app/backend/api"
 )
 
 var statusMap = map[int]string{

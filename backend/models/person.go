@@ -1,7 +1,7 @@
 package models
 
 import (
-	"backend/api"
+	"import github.com/Sepas8/death-note-app/backend/api"
 	"time"
 	"gorm.io/gorm"
 )

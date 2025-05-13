@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"backend/config"
-	"backend/models"
+	"github.com/Sepas8/death-note-app/backend/config"
+	"github.com/Sepas8/death-note-app/backend/models"
 	"fmt"
 	"log"
 
