@@ -1,7 +1,7 @@
 package server
 
 import (
-	"backend-avanzada/models"
+	"backend/models"
 	"context"
 	"fmt"
 	"sync"

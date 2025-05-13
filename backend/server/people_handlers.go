@@ -1,8 +1,8 @@
 package server
 
 import (
-	"backend-avanzada/api"
-	"backend-avanzada/models"
+	"backend/api"
+	"backend/models"
 	"encoding/json"
 	"fmt"
 	"net/http"

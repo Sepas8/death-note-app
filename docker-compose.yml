@@ -4,32 +4,39 @@ services:
   backend:
     build:
       context: ./backend
-    container_name: backend-go-app
+    container_name: deathnote-backend
     ports:
       - "8000:8000"
     env_file:
-      - ./backend/.env
+      - ./.env
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
   frontend:
     build:
       context: ./frontend
-    container_name: react-app
+    container_name: deathnote-frontend
     ports:
       - "5173:5173"
-    stdin_open: true
-    tty: true
+    env_file:
+      - ./.env
+    depends_on:
+      - backend
     environment:
-      - VITE_API_URL=http://localhost:8000
+      - VITE_API_URL=http://backend:8000  # Usar el nombre del servicio backend
 
   db:
     image: postgres:bookworm
-    container_name: backend-go-db
+    container_name: deathnote-db
     restart: always
     env_file:
-      - ./backend/.env
+      - ./.env
     ports:
       - "5432:5432"
     volumes:
@@ -39,6 +46,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
 volumes:
   pg-data:

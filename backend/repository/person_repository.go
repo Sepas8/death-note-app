@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"backend-avanzada/models"
+	"backend/models"
 	"errors"
 
 	"gorm.io/gorm"

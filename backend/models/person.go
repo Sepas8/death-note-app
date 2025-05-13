@@ -1,7 +1,7 @@
 package models
 
 import (
-	"backend-avanzada/api"
+	"backend/api"
 
 	"gorm.io/gorm"
 )

@@ -1,10 +1,10 @@
 package server
 
 import (
-	"backend-avanzada/config"
-	"backend-avanzada/logger"
-	"backend-avanzada/models"
-	"backend-avanzada/repository"
+	"backend/config"
+	"backend/logger"
+	"backend/models"
+	"backend/repository"
 	"encoding/json"
 	"fmt"
 	"net/http"

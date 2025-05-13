@@ -1,7 +1,7 @@
 package server
 
 import (
-	"backend-avanzada/api"
+	"backend/api"
 	"encoding/json"
 	"net/http"
 )
