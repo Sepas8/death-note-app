@@ -1,7 +1,7 @@
 package main
 
 import (
-	"backend-avanzada/server"
+	"backend/server"
 )
 
 func main() {

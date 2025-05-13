@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend-go-app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: react-app
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+  db:
+    image: postgres:bookworm
+    container_name: backend-go-db
+    restart: always
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg-data:

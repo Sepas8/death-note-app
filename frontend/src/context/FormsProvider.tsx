@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FormsContext } from "./FormsContext";
+const response = await fetch(`${import.meta.env.VITE_API_URL}/api/people`);
 
 export type FormsContextType = {
   showRegisterForm: boolean;
