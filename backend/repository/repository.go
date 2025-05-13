@@ -1,6 +1,8 @@
 package repository
 
-type Entity interface{}
+type Entity interface {
+	models.Person | models.Kill
+}
 
 type Repository[T Entity] interface {
 	FindAll() ([]*T, error)

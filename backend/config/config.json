@@ -1,6 +1,10 @@
 {
   "address": ":8000",
-  "database": "postgres",
-  "kill_duration": 5,
-  "kill_duration_with_desc": 10
+  "db_host": "db",
+  "db_port": "5432",
+  "db_user": "postgres",
+  "db_password": "postgres",
+  "db_name": "deathnote",
+  "kill_duration": 40,
+  "kill_duration_with_desc": 400
 }

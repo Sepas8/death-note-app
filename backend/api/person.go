@@ -1,16 +1,18 @@
 package api
 
 type PersonRequestDto struct {
-	Nombre string `json:"name"`
-	Edad   int32  `json:"age"`
+	Nombre   string `json:"name" validate:"required"`
+	Edad     int32  `json:"age"`
+	FotoURL  string `json:"photo_url" validate:"required,url"`
 }
 
 type PersonResponseDto struct {
 	ID            int    `json:"person_id"`
 	Nombre        string `json:"name"`
-	Edad          int    `json:"age"`
+	Edad          int32  `json:"age"`
+	FotoURL       string `json:"photo_url"`
 	FechaCreacion string `json:"created_at"`
-	Estado        string `json:"status"`
+	Estado        string `json:"status"` // alive, pending, dead
 }
 
 type ErrorResponse struct {

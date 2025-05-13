@@ -3,7 +3,6 @@ module backend
 go 1.24.3
 
 require (
-	github.com/gorilla/mux v1.8.1
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/driver/sqlite v1.5.7
 	gorm.io/gorm v1.26.0
