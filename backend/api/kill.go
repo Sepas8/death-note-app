@@ -1,7 +1,7 @@
 package api
 
 type KillRequestDto struct {
-	Causa    string `json:"cause"`             // Requerido dentro de 40 segundos
+	Cause    string `json:"cause"`             // Requerido dentro de 40 segundos
 	Detalles string `json:"details,omitempty"` // Opcional dentro de 6:40 min adicionales
 }
 

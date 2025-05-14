@@ -1,12 +1,15 @@
 package server
 
 import (
-	"backend/config"
-	"backend/logger"
-	"backend/models"
-	"backend/repository"
+	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/Sepas8/death-note-app/backend/config"
+	"github.com/Sepas8/death-note-app/backend/logger"
+	"github.com/Sepas8/death-note-app/backend/models"
+	"github.com/Sepas8/death-note-app/backend/repository"
+
 	"net/http"
 	"os"
 
@@ -19,10 +22,16 @@ type Server struct {
 	DB               *gorm.DB
 	Config           *config.Config
 	Handler          http.Handler
-	PeopleRepository repository.Repository[models.Person]
-	KillRepository   repository.Repository[models.Kill]
+	PeopleRepository *repository.PeopleRepository
+	KillRepository   *repository.KillRepository
 	logger           *logger.Logger
 	taskQueue        *TaskQueue
+}
+
+func NewTaskQueue() *TaskQueue {
+	return &TaskQueue{
+		tasks: make(map[int]context.CancelFunc),
+	}
 }
 
 func NewServer() *Server {
@@ -49,7 +58,7 @@ func (s *Server) StartServer() {
 	fmt.Println("Inicializando mux...")
 	srv := &http.Server{
 		Addr:    s.Config.Address,
-		Handler: s.router(),
+		Handler: s.Router(),
 	}
 	fmt.Println("Escuchando en el puerto ", s.Config.Address)
 	if err := srv.ListenAndServe(); err != nil {

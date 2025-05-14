@@ -1,44 +1,57 @@
-func (s *Server) handleCreatePerson(w http.ResponseWriter, r *http.Request) {
-	var p api.PersonRequestDto
-	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
-		s.HandleError(w, http.StatusBadRequest, r.URL.Path, err)
-		return
-	}
+package server
 
-	// Validar que la foto esté presente
-	if p.FotoURL == "" {
-		s.HandleError(w, http.StatusBadRequest, r.URL.Path, fmt.Errorf("photo is required"))
-		return
-	}
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
 
-	person := &models.Person{
-		Name:     p.Nombre,
-		Age:      p.Edad,
-		PhotoURL: p.FotoURL,
-	}
+	"github.com/Sepas8/death-note-app/backend/api"
+	"github.com/Sepas8/death-note-app/backend/models"
+)
 
-	savedPerson, err := s.PeopleRepository.Save(person)
+func (s *Server) handlePeople(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		s.handleGetPeople(w, r)
+	case http.MethodPost:
+		s.handleCreatePerson(w, r)
+	default:
+		s.HandleError(w, http.StatusMethodNotAllowed, r.URL.Path, fmt.Errorf("method not allowed"))
+	}
+}
+
+func (s *Server) handleGetPeople(w http.ResponseWriter, r *http.Request) {
+	people, err := s.PeopleRepository.FindAll()
 	if err != nil {
 		s.HandleError(w, http.StatusInternalServerError, r.URL.Path, err)
 		return
 	}
 
-	// Programar muerte automática en 40 segundos
-	kill := &models.Kill{
-		PersonID:     savedPerson.ID,
-		CauseOfDeath: "heart attack", // Valor por defecto
-		TimeOfDeath:  time.Now().Add(time.Duration(s.Config.KillDuration) * time.Second),
+	response := make([]*api.PersonResponseDto, len(people))
+	for i, p := range people {
+		response[i] = p.ToPersonResponseDto()
 	}
 
-	// Usar el taskQueue para programar la muerte
-	s.taskQueue.StartTask(int(savedPerson.ID), 
-		time.Duration(s.Config.KillDuration)*time.Second,
-		func(k *models.Kill) error {
-			k.DeathExecuted = true
-			_, err := s.KillRepository.Save(k)
-			return err
-		}, 
-		kill)
+	s.respondWithJSON(w, http.StatusOK, response)
+}
 
-	respondWithJSON(w, http.StatusCreated, savedPerson.ToPersonResponseDto())
+func (s *Server) handleCreatePerson(w http.ResponseWriter, r *http.Request) {
+	var req api.PersonRequestDto
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.HandleError(w, http.StatusBadRequest, r.URL.Path, err)
+		return
+	}
+
+	person := &models.Person{
+		Name:     req.Nombre,
+		PhotoURL: req.FotoURL,
+	}
+
+	if err := s.PeopleRepository.Create(person); err != nil {
+		s.HandleError(w, http.StatusInternalServerError, r.URL.Path, err)
+		return
+	}
+
+	s.respondWithJSON(w, http.StatusCreated, person.ToPersonResponseDto())
+
 }

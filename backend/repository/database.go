@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"fmt"
 	"github.com/Sepas8/death-note-app/backend/config"
 	"github.com/Sepas8/death-note-app/backend/models"
-	"fmt"
 	"log"
 
 	"gorm.io/driver/postgres"

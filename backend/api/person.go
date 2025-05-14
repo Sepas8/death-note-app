@@ -1,9 +1,9 @@
 package api
 
 type PersonRequestDto struct {
-	Nombre   string `json:"name" validate:"required"`
-	Edad     int32  `json:"age"`
-	FotoURL  string `json:"photo_url" validate:"required,url"`
+	Nombre  string `json:"name" validate:"required"`
+	Edad    int32  `json:"age"`
+	FotoURL string `json:"photo_url" validate:"required,url"`
 }
 
 type PersonResponseDto struct {
