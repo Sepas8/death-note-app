@@ -36,22 +36,28 @@ func (s *Server) handleGetPeople(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleCreatePerson(w http.ResponseWriter, r *http.Request) {
-	var req api.PersonRequestDto
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		s.HandleError(w, http.StatusBadRequest, r.URL.Path, err)
-		return
-	}
+    var req api.PersonRequestDto
+    if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+        s.HandleError(w, http.StatusBadRequest, r.URL.Path, err)
+        return
+    }
 
-	person := &models.Person{
-		Name:     req.Nombre,
-		PhotoURL: req.FotoURL,
-	}
+    // Debugging: Verifica los datos recibidos
+    fmt.Printf("Received request: %+v\n", req)
 
-	if err := s.PeopleRepository.Create(person); err != nil {
-		s.HandleError(w, http.StatusInternalServerError, r.URL.Path, err)
-		return
-	}
+    // Mapea los datos del DTO al modelo
+    person := &models.Person{
+        Name:     req.Nombre,
+        Age:      req.Edad,      // Asigna el campo Edad
+        PhotoURL: req.FotoURL,
+    }
 
-	s.respondWithJSON(w, http.StatusCreated, person.ToPersonResponseDto())
+    // Crea la persona en el repositorio
+    if err := s.PeopleRepository.Create(person); err != nil {
+        s.HandleError(w, http.StatusInternalServerError, r.URL.Path, err)
+        return
+    }
 
+    // Responde con el DTO de respuesta
+    s.respondWithJSON(w, http.StatusCreated, person.ToPersonResponseDto())
 }
