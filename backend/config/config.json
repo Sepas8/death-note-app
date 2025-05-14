@@ -1,5 +1,6 @@
 {
   "address": ":8000",
+  "database": "postgres",
   "db_host": "db",
   "db_port": "5432",
   "db_user": "postgres",
@@ -8,3 +9,5 @@
   "kill_duration": 40,
   "kill_duration_with_desc": 400
 }
+
+

@@ -3,6 +3,8 @@ package config
 import "time"
 
 type Config struct {
+	
+	
 	Address                     string `json:"address"`
 	Database                    string `json:"database"`
 	DBHost                      string `json:"db_host"`
